@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "type": "file",
+      "title": "Data science internship notes",
+      "path": "Data science internship notes.md"
+    },
+    {
+      "type": "file",
+      "title": "TEXT MINING IN PYTHON",
+      "path": "TEXT MINING IN PYTHON.md"
+    },
+    {
+      "type": "file",
+      "title": "Applied Machine Learning in Python NOTES",
+      "path": "Applied Machine Learning in Python NOTES.md"
+    },
+    {
+      "type": "file",
+      "title": "AI Analyst",
+      "path": "AI Analyst.md"
+    },
+    {
+      "type": "file",
+      "title": "THE HUNDRED PAGE MACHINE LEARNING BOOK - notes",
+      "path": "THE HUNDRED PAGE MACHINE LEARNING BOOK - notes.md"
+    },
+    {
+      "type": "file",
+      "title": "DeepLearning.ai Specialization",
+      "path": "DeepLearning.ai Specialization.md"
+    }
+  ]
+}
