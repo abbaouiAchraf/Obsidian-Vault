@@ -114,7 +114,7 @@ It just simple calculus
 >> b^[1] = np.zeros((2,1)) 
 # its fine to initialize b with zeros
 ```
-**Large values of W means large values of Z means you ll end up in the slope of the activation function which means the gradient descent will learn slowly (in sigmoid function, tanh)**
+**Large values of W means large values of Z means you will end up in the slope of the activation function which means the gradient descent will learn slowly (in sigmoid function, tanh)**
 
 ## Exam
 ![[Pasted image 20230530223800.png]]
@@ -185,7 +185,7 @@ Those results are base on Human error is : ***0%***
 | Dev set error :   |      11%      |    16%    |             30%             |          1%           |
 
 ## Basic Recipe for Machine Learning
-*align \`\`\` with mermaid to visualize the diagram
+*align \`\`\` with mermaid to visualize the diagram* 
 ```
 mermaid
 graph TD 
@@ -202,3 +202,137 @@ D --> K[Apply Regularization Techniques]
 D --> L[Explore Different Network Architectures] 
 ```
 ![[Pasted image 20230603012804.png]]
+## Regularization
+### Logistic regression
+![[Pasted image 20230603145644.png]]
+We don't include regularization of *b* because it has a small impact in the function so we don't include it
+![[Pasted image 20230603145744.png]]
+**$\lambda$ : Regularization parameter.**
+### Neural network
+*Error in the formula of norm(W<sup>[l]</sup>)*
+![[Pasted image 20230603150642.png]]
+
+## Regularization's impact on overfitting
+- if $\lambda$ is big and *w<sup>[l]</sup>* is small => *z<sup>[l]</sup>* will be relatively small the NN will compute something not too far from a linear function, which means it will not fit to other values.
+![[Pasted image 20230603152234.png]]
+
+## Dropout Regularization
+### General :
+- In each layer we add a probability or removing or keeping a node in that layer, after doing that we remove the nodes and the connections with it. 
+   we will end up training much smaller networks in every iteration.
+   ![[Pasted image 20230603171251.png]]
+- Its better to choose *keep-prob* value by layer.
+### Implementing Inverted dropout :
+![[Pasted image 20230603172427.png]]
+### Making predictions at test time :
+![[Pasted image 20230603172759.png]]
+In test time we are not using dropout, because using it will just add noise the prediction
+-> The effect of */= Keep-prob* is to ensure that without implementing dropout in test time, the expected calculations wont change.
+*Humm something in here I did not get right*
+
+## Data augmentation
+### General :
+If you do not have a way to access more data : 
+*$Example:$*
+You have flip and image or take a random proportion from the original image.
+![[Pasted image 20230603180111.png]]
+### Early stopping
+*I did not get it :( its so sad*
+## Normalizing Inputs
+### Normalizing training sets
+#### General :
+*Why doing this ?*
+![[Pasted image 20230603213819.png]]
+Its easy to optimize the cost function $J(w,b)$
+$$ J(w,b)= \frac{1}{m} \sum_{i=1}^{m} L(\hat y^{(i)},{y}^{(i)})$$
+![[Pasted image 20230603213933.png]]
+*Normalizing :*
+![[Pasted image 20230603213646.png]]
+#### Sub. mean:
+![[Pasted image 20230603213429.png]]
+![[Pasted image 20230603213510.png]]
+#### Normalize variance :
+![[Pasted image 20230603213522.png]]
+![[Pasted image 20230603213528.png]]
+
+
+## Vanishing / Exploding Gradients
+### General :
+Its about how bigger or too small weights *W* can make $\hat y$ exponentially big or small.
+- if $W^{[l]}$ > $I$ : the activation function will get bigger exponentially 
+- if $W^{[l]}$ < $I$ : the activation function will get smaller exponentially ![[Pasted image 20230603231857.png]]
+->$I:$ is the *Identity* matrix
+-> Those cases will make training difficult and make gradients decent slow.
+
+
+## Weight Initialization for Deep Networks
+![[Pasted image 20230603233635.png]]
+- When using other functions :
+![[Pasted image 20230603233818.png]]
+
+## Numerical Approximation of Gradients
+![[Pasted image 20230603235139.png]]
+![[Pasted image 20230603235159.png]]
+![[Pasted image 20230603235322.png]]
+## Gradient Checking
+![[Pasted image 20230603235817.png]]
+also : $J(\theta) = J(\theta_{1},\theta_{2},\theta_{3},...,\theta_{L})$
+![[Pasted image 20230604023922.png]]
+**Gradient checking**
+![[Pasted image 20230604000250.png]]
+*We will need to let check* : $$\frac{||d\theta_{approx} - d\theta||_{2}}{||d\theta_{approx}||_{2}+||d\theta||_{2}} \approx \epsilon = 10^{-7}$$
+![[Pasted image 20230604001041.png]]
+*It will show you if exist a bug in forward or backward propagation*
+
+## Tips :
+![[Pasted image 20230604001639.png]]
+## Exam + Quiz
+- Data normalization doesn't affect the variance of the model.
+- When increasing the keep_prob value the probability that a node gets discarded during training is less thus reducing the regularization effect.
+- The dropout is a regularization technique and thus helps to reduce the overfit.
+	**What you should remember**:
+- The weights $W^{[l]}$ should be initialized randomly to break symmetry. 
+- However, it's okay to initialize the biases $b^{[l]}$ to zeros. Symmetry is still broken so long as $W^{[l]}$ is initialized randomly. 
+**Observations**:
+- The cost starts very high. This is because with large random-valued weights, the last activation (sigmoid) outputs results that are very close to 0 or 1 for some examples, and when it gets that example wrong it incurs a very high loss for that example. Indeed, when log($a^{[3]}$)=log(0)log⁡($a^{[3]}$)=log⁡(0), the loss goes to infinity.
+- Poor initialization can lead to vanishing/exploding gradients, which also slows down the optimization algorithm.
+- If you train this network longer you will see better results, but initializing with overly large random numbers slows down the optimization.
+**In summary**:
+- Initializing weights to very large random values doesn't work well.
+- Initializing with small random values should do better. The important question is, how small should be these random values be? Let's find out up next!
+
+**Optional Read:**
+The main difference between Gaussian variable (`numpy.random.randn()`) and uniform random variable is the distribution of the generated random numbers:
+
+- numpy.random.rand() produces numbers in a [uniform distribution](https://raw.githubusercontent.com/jahnog/deeplearning-notes/master/Course2/images/rand.jpg).
+- and numpy.random.randn() produces numbers in a [normal distribution](https://raw.githubusercontent.com/jahnog/deeplearning-notes/master/Course2/images/randn.jpg).
+
+When used for weight initialization, randn() helps most the weights to Avoid being close to the extremes, allocating most of them in the center of the range.
+
+An intuitive way to see it is, for example, if you take the [sigmoid() activation function](https://raw.githubusercontent.com/jahnog/deeplearning-notes/master/Course2/images/sigmoid.jpg).
+
+You’ll remember that the slope near 0 or near 1 is extremely small, so the weights near those extremes will converge much more slowly to the solution, and having most of them near the center will speed the convergence.
+![[Pasted image 20230604011256.png]]
+Here's a quick recap of the main takeaways:
+
+- Different initializations lead to very different results
+- Random initialization is used to break symmetry and make sure different hidden units can learn different things
+- Resist initializing to values that are too large!
+- He initialization works well for networks with ReLU activations
+![[Pasted image 20230604015454.png]]
+![[Pasted image 20230604022415.png]]
+![[Pasted image 20230604022426.png]]
+![[Pasted image 20230604024450.png]]
+## Optimization algorithms 
+
+
+
+
+
+
+
+
+## Notes PDF:
+### Week 1:
+![[C2_W1.pdf]]
+### Week 2:
