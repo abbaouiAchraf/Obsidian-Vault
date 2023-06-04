@@ -146,14 +146,6 @@
               "type": "advanced-tables-toolbar",
               "state": {}
             }
-          },
-          {
-            "id": "1694dc4456fb0d68",
-            "type": "leaf",
-            "state": {
-              "type": "git-history-view",
-              "state": {}
-            }
           }
         ],
         "currentTab": 4
@@ -175,15 +167,24 @@
       "obsidian-file-cleaner:Clean files": false
     }
   },
-  "active": "829bbf2715371ec9",
+  "active": "160ee2366271737c",
   "lastOpenFiles": [
-    "Pasted image 20230603012804.png",
-    "Pasted image 20230603004813.png",
+    "Pasted image 20230604024450.png",
+    "Pasted image 20230604023922.png",
+    "Pasted image 20230604022426.png",
+    "Pasted image 20230604022415.png",
+    "Pasted image 20230604015454.png",
+    "Pasted image 20230604011256.png",
+    "C2_W1.pdf",
+    "Pasted image 20230604001639.png",
+    "Pasted image 20230604001041.png",
+    "Pasted image 20230604000250.png",
+    "Pasted image 20230603235817.png",
+    "Pasted image 20230603235322.png",
+    "Data science internship notes.md",
     "DeepLearning.ai Specialization.md",
     "2023-06-02.md",
     "C1_W3.pdf",
-    "Pasted image 20230601140105.png",
-    "Pasted image 20230601133234.png",
     "C1_W4.pdf",
     "4. Logistic_Regression_Cost_Function 1.pdf",
     "3. Logistic_Regression 1.pdf",
@@ -192,15 +193,6 @@
     "2. Binary_Classification.pdf",
     "1. Standard notations for Deep Learning.pdf",
     "4. Logistic_Regression_Cost_Function.pdf",
-    "3. Logistic_Regression.pdf",
-    "Pasted image 20230531222005.png",
-    "Pasted image 20230530231920.png",
-    "Pasted image 20230530223810.png",
-    "Pasted image 20230530223800.png",
-    "Pasted image 20230530171138.png",
-    "Pasted image 20230530153034.png",
-    "Pasted image 20230530151544.png",
-    "Data science internship notes.md",
     "Reseau Securité.md",
     "TEXT MINING IN PYTHON.md",
     "Untitled 1.md",
