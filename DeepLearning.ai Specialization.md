@@ -250,6 +250,7 @@ $$ J(w,b)= \frac{1}{m} \sum_{i=1}^{m} L(\hat y^{(i)},{y}^{(i)})$$
 ![[Pasted image 20230603213646.png]]
 #### Sub. mean:
 ![[Pasted image 20230603213429.png]]
+![[Pasted image 20230607003625.png]]
 ![[Pasted image 20230603213510.png]]
 #### Normalize variance :
 ![[Pasted image 20230603213522.png]]
@@ -323,7 +324,93 @@ Here's a quick recap of the main takeaways:
 ![[Pasted image 20230604022415.png]]
 ![[Pasted image 20230604022426.png]]
 ![[Pasted image 20230604024450.png]]
-## Optimization algorithms 
+## Optimizations' Algorithms 
+### Mini-batch Gradient Descent
+Vectorization allows you to efficiently compute on $m$ examples : 
+$X_{(n_x ,m)} = [x^{(1)},x^{(2)},x^{(3)},..,x^{(m)}]$ 
+$Y_{(1 ,m)} = [y^{(1)},y^{(2)},y^{(3)},..,y^{(m)}]$ 
+*What if m = 5,000,000 ?*
+- The batch gradient decent will take a long time in every iteration
+=> You can have a faster algorithm, if you let the gradient decent have some progress before finish processing the entire 5,000,000 example.
+- We split the training set on smaller sets *mini-batches.*
+![[Pasted image 20230605003031.png]]
+each *mini-batch t* is symbolized with $X^{\{t\}}$,$Y^{\{t\}}$. 
+**How to run it:**
+![[Pasted image 20230605004211.png]]
+![[Pasted image 20230605004326.png]]
+this called : *1 epoch*
+![[Pasted image 20230605004445.png]]
+![[Pasted image 20230605005237.png]]
+![[Pasted image 20230605005540.png]]
+
+![[Pasted image 20230605005604.png]]
+**How to choose mini-batch size**
+![[Pasted image 20230605010709.png]]
+### Exponentially Weighted moving Averages
+![[Pasted image 20230605175234.png]]
+We want to draw the moving *local-average*, we will use this approach to calculate.
+![[Pasted image 20230605175640.png]]
+![[Pasted image 20230605181153.png]]
+![[Pasted image 20230605175649.png]]
+![[Pasted image 20230605181138.png]]
+over all : 
+*Exponentially weighted averages :* $$v_t = \beta v_{t-1} + (1 - \beta)\theta_t$$
+![[Pasted image 20230605182936.png]]
+**Advantage is it takes low memory but you lose some of the accuracy.**
+### Bias Correction in Exponentially Weighted Averages
+- the moving averages gets initialized with $v$ = 0 and the next term will be based on $(1-\beta)\theta$, which will give a low start to the *curve* and *the estimation*.
+$$v_0 = 0 \ |\  v_t = \frac{\beta v_{t-1} + (1-\beta) v_t}{1-\beta^t}$$
+### Gradient Descent with Momentum
+![[Pasted image 20230605191100.png]]
+- It allows the gradient descent to take more straight forward path and dumb out the isolations
+![[Pasted image 20230605191334.png]]
+-> $\beta = 0.9 \approx$ averaging to 10 days
+-> $v_{dw} = 0,\ b_{db} = 0$ equals to matrix of zeros and an array of zeros.
+-> it preferable to use $v_{dw} = \beta v_{dw} +dw$
+
+### RMSprop
+![[Pasted image 20230605203449.png]]
+![[Pasted image 20230605202602.png]]
+*Avoids diverging the function by a huge amount*
+**RMS : Root Mean Squares**
+### ! ! Recommended to try ! ! Adam Optimization Algorithm
+Combines all what we saw in those algorithms
+![[Pasted image 20230605204630.png]]
+- $\alpha : needs\ to\ be\ tune$
+- $\beta_1 : 0.9\ (dw)$
+- $\beta_2 : 0.999\ (dw^{2})$
+- $\epsilon : 10^{-8}$
+**Adam :** *Adaptive Moment Estimation*
+## Learning Rate Decay
+- Slowly reduce $\alpha$ :
+1 epoch : 1 pass though data;
+-> *Equation :*$$\alpha = \frac{1}{1 + decay\_rate * epoch\_num} \alpha_0 $$
+-  $\alpha_0=0.2,\ decay\_rate=1$
+-> *other formulas :*
+![[Pasted image 20230605212328.png]]
+## The Problem of Local Optima
+![[Pasted image 20230605214720.png]]
+## Exam
+![[Pasted image 20230606205918.png]]
+![[Pasted image 20230606211120.png]]
+![[Pasted image 20230606213028.png]]
+- With batch size 1, you lose all the benefits of vectorization across examples in the mini-batch.
+## Tuning Process
+## Appropriate Scale to pick Hyperparameters
+
+- Find a good scale to choose randomly an hyperparameter at random
+-> Sampling :
+![[Pasted image 20230606231536.png]]
+![[Pasted image 20230607002346.png]]
+
+## Hyperparameters Tuning in Practice: Pandas vs. Caviar
+![[Pasted image 20230607003348.png]]
+- Working with one model or too many at once
+What way to choose is depending on the computational power available.
+
+
+
+
 
 
 
@@ -336,3 +423,5 @@ Here's a quick recap of the main takeaways:
 ### Week 1:
 ![[C2_W1.pdf]]
 ### Week 2:
+![[C2_W2.pdf]]
+### Week 3:

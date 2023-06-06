@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#Mini-batch",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +74,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -167,20 +167,21 @@
       "obsidian-file-cleaner:Clean files": false
     }
   },
-  "active": "160ee2366271737c",
+  "active": "829bbf2715371ec9",
   "lastOpenFiles": [
-    "Pasted image 20230604024450.png",
-    "Pasted image 20230604023922.png",
-    "Pasted image 20230604022426.png",
-    "Pasted image 20230604022415.png",
-    "Pasted image 20230604015454.png",
-    "Pasted image 20230604011256.png",
+    "Pasted image 20230607003625.png",
+    "Pasted image 20230607003348.png",
+    "Pasted image 20230607002346.png",
+    "Pasted image 20230606231536.png",
+    "Pasted image 20230606213028.png",
+    "Pasted image 20230606211120.png",
+    "Pasted image 20230606205918.png",
+    "C2_W2.pdf",
+    "Pasted image 20230605214720.png",
+    "Pasted image 20230605212328.png",
+    "Pasted image 20230605204630.png",
+    "Pasted image 20230605203449.png",
     "C2_W1.pdf",
-    "Pasted image 20230604001639.png",
-    "Pasted image 20230604001041.png",
-    "Pasted image 20230604000250.png",
-    "Pasted image 20230603235817.png",
-    "Pasted image 20230603235322.png",
     "Data science internship notes.md",
     "DeepLearning.ai Specialization.md",
     "2023-06-02.md",
@@ -192,7 +193,6 @@
     "1. Standard notations for Deep Learning 1.pdf",
     "2. Binary_Classification.pdf",
     "1. Standard notations for Deep Learning.pdf",
-    "4. Logistic_Regression_Cost_Function.pdf",
     "Reseau Securité.md",
     "TEXT MINING IN PYTHON.md",
     "Untitled 1.md",
