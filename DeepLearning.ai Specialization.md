@@ -408,16 +408,69 @@ Combines all what we saw in those algorithms
 - Working with one model or too many at once
 What way to choose is depending on the computational power available.
 
+## Normalizing Activations in a Network
+We normalize value of $a^{[l]}$ so $w^{[l+1]}, b^{[l+1]}$ can train faster
+*normalizing means :* $X = \frac{X-\mu}{\sigma}$  
+![[Pasted image 20230607215018.png]]
+![[Pasted image 20230607220801.png]]
 
+**Applying it to Network**
+![[Pasted image 20230607230043.png]]
+->*tf.nn-batch-normalization*
+![[Pasted image 20230607230932.png]]
+![[Pasted image 20230607231244.png]]
+-> **Why does it work ?**
+Batch normalization (batch norm) works by normalizing the input features (X) and the values in hidden units to improve learning speed. By normalizing the features, all inputs take on a similar range of values, which accelerates learning. Batch norm extends this normalization concept to the hidden units in the network.
 
+One reason why batch norm is effective is that it makes the weights in deeper layers of the network more robust to changes in weights in earlier layers. This is important because changes in the input distribution, known as covariate shift, can hinder the performance of a network. Even if the underlying function remains the same, if the distribution of inputs changes, the network might need to be retrained. Batch norm reduces the impact of covariate shift by stabilizing the distribution of hidden unit values. It ensures that the mean and variance of these values remain constant, even as the parameters of earlier layers change. This allows each layer to learn more independently, speeding up learning throughout the network.
 
+Batch norm also has a slight regularization effect. Each mini-batch used in training introduces noise due to the estimation of mean and variance with a small sample of data. Scaling the hidden units by these noisy estimates adds some noise to the activations, similar to the dropout regularization technique. This regularization effect prevents the network from relying too heavily on any single hidden unit.
 
+It's worth noting that batch norm should primarily be used for normalizing hidden unit activations and accelerating learning, rather than relying on it solely as a regularization technique. However, it does have a small unintended regularization effect. Additionally, using larger mini-batch sizes reduces the regularization effect, as the noise introduced by the estimation of mean and variance decreases.
 
+During testing or making predictions, batch norm needs to be handled differently since only single examples are processed rather than mini-batches. The specific details of how to apply batch normalization at test time are typically discussed separately.
 
+Overall, batch norm is a powerful technique that helps stabilize the distribution of hidden unit values, making learning more efficient and improving the robustness of deep neural networks.
 
-
-
-
+## Batch Norm at Test Time
+ ![[Pasted image 20230607234332.png]]
+ ![[Pasted image 20230607235118.png]]
+## Softmax (Multiclass classification)
+![[Pasted image 20230608001319.png]]
+![[Pasted image 20230608001502.png]]
+$\hat y : (4,1)$
+**How ?**
+$Z^{[l]} = W^{[l]}a^{[l-1]}+b^{[l]}$
+*activation function*
+$$a^{[l]} = \frac{e^{Z^{[l]}}}{\sum^{4}_{i=1} t_i}\ | \ t = e^{Z^{[l]}}\ | \ a^{[l]}:(4,1)$$
+**It s like a generalization of logistic regression**
+-> all decision boundaries will be linear with a NN with no hidden layers.
+![[Pasted image 20230608005647.png]]
+## Training a Softmax Classifier
+### General :
+-> Hard max is when one output get value of *1* and the else get value of *0*.
+![[Pasted image 20230608011323.png]]
+### Loss function :
+![[Pasted image 20230608012308.png]]
+## Deep Learning Frameworks : TENSORFLOW
+- In TensorFlow you need only to implement the forward_prob and the back_prob will be taken care by the framework.
+- ```with tf.GradientTape() as tape :``` this will record the computational steps of the operation under it.
+-> training a model to find the minimum of the cost function $w^2 -10*w +25$
+![[Pasted image 20230608013800.png]]
+- *0.1* in ```optimizer = tf.keras.optimizers.Adam(0.1) ``` represent the learning rate $\alpha$.
+**Simple Alternative**
+![[Pasted image 20230608014448.png]]
+![[Pasted image 20230608014436.png]]
+## Exam
+- the main object to get used and transformed is the `tf.Tensor`. These tensors are the TensorFlow equivalent of Numpy arrays, i.e. multidimensional arrays of a given data type that also contain information about the computational graph.
+- TensorFlow will compute the derivatives for you, by moving backwards through the graph recorded with `GradientTape`. All that's left for you to do then is specify the cost function and optimizer you want to use!
+- use `tf.Variable` to store the state of your variables. Variables can only be created once as its initial value defines the variable shape and type. Additionally, the `dtype` arg in `tf.Variable` can be set to allow data to be converted to that type. But if none is specified, either the datatype will be kept if the initial value is a Tensor, or `convert_to_tensor` will decide. It's generally best for you to specify directly, so nothing breaks!
+- Since TensorFlow Datasets are generators, you can't access directly the contents unless you iterate over them in a for loop, or by explicitly creating a Python iterator using `iter` and consuming its elements using `next`. Also, you can inspect the `shape` and `dtype` of each element using the `element_spec` attribute.
+- There's one more additional difference between TensorFlow datasets and Numpy arrays: If you need to transform one, you would invoke the `map` method to apply the function passed as an argument to each of the elements.![[Pasted image 20230608235504.png]]
+- ![[Pasted image 20230609000558.png]]
+- ![[Pasted image 20230609001118.png]]
+  ```one_hot = tf.reshape(tf.one_hot(label,depth,axis = 0),shape=[-1,])```
+- 
 
 ## Notes PDF:
 ### Week 1:
@@ -425,3 +478,6 @@ What way to choose is depending on the computational power available.
 ### Week 2:
 ![[C2_W2.pdf]]
 ### Week 3:
+![[C2_W3.pdf]]
+
+# Structuring Machine Learning Projects

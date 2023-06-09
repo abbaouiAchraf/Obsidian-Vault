@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "2224c9ec4ddb9017",
+        "id": "1c4874b7763215b1",
         "type": "tabs",
         "children": [
           {
-            "id": "829bbf2715371ec9",
+            "id": "e5b963a0ff3e36b2",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -74,7 +74,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -167,23 +167,25 @@
       "obsidian-file-cleaner:Clean files": false
     }
   },
-  "active": "829bbf2715371ec9",
+  "active": "e5b963a0ff3e36b2",
   "lastOpenFiles": [
-    "Pasted image 20230607003625.png",
-    "Pasted image 20230607003348.png",
-    "Pasted image 20230607002346.png",
-    "Pasted image 20230606231536.png",
-    "Pasted image 20230606213028.png",
-    "Pasted image 20230606211120.png",
-    "Pasted image 20230606205918.png",
+    "Pasted image 20230609001118.png",
+    "Pasted image 20230609000558.png",
+    "Pasted image 20230608235504.png",
+    "C2_W3.pdf",
+    "Pasted image 20230608014448.png",
+    "Pasted image 20230608014436.png",
+    "Pasted image 20230608014350.png",
+    "Pasted image 20230608013800.png",
+    "Pasted image 20230608012308.png",
+    "Pasted image 20230608011702.png",
+    "Pasted image 20230608011323.png",
+    "Pasted image 20230608005647.png",
+    "Untitled.canvas",
+    "DeepLearning.ai Specialization.md",
     "C2_W2.pdf",
-    "Pasted image 20230605214720.png",
-    "Pasted image 20230605212328.png",
-    "Pasted image 20230605204630.png",
-    "Pasted image 20230605203449.png",
     "C2_W1.pdf",
     "Data science internship notes.md",
-    "DeepLearning.ai Specialization.md",
     "2023-06-02.md",
     "C1_W3.pdf",
     "C1_W4.pdf",
@@ -192,7 +194,6 @@
     "2. Binary_Classification 1.pdf",
     "1. Standard notations for Deep Learning 1.pdf",
     "2. Binary_Classification.pdf",
-    "1. Standard notations for Deep Learning.pdf",
     "Reseau Securité.md",
     "TEXT MINING IN PYTHON.md",
     "Untitled 1.md",
@@ -202,7 +203,6 @@
     "Untitled.md",
     "2023-03-07.md",
     "THE HUNDRED PAGE MACHINE LEARNING BOOK - notes.md",
-    "Untitled.canvas",
     "Pasted image 20230116210933.png.md"
   ]
 }
