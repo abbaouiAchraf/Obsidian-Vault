@@ -107,6 +107,7 @@ It just simple calculus
 ## Random Initialization of Weights in NN
 
 *Remarque :* You should not initialize the weights to zero, because the neuron in one layer will be identical and in back propagation their will remain so, so the dW in every iteration will have identical values in each row. You will want to have different computations in different unites in your hidden layer. So the solution is to initialize your parameter's randomly.
+
 ```
 >> W^[1] = np.random.randn((2,2)) * 0.01 
 # the 0.01 is for not making the weights too large
@@ -161,7 +162,7 @@ It just simple calculus
 ![[C1_W4.pdf]]
 
 
-# Improving Deep Neural Networks: Hyperparameter Tuning, Regularization and Optimization
+# Improving Deep Neural Networks
 ## Train/ Dev/ Test sets
 Data                                                                           [100%]
 | Training set                                                                [60%]
@@ -481,3 +482,137 @@ $$a^{[l]} = \frac{e^{Z^{[l]}}}{\sum^{4}_{i=1} t_i}\ | \ t = e^{Z^{[l]}}\ | \ a^{
 ![[C2_W3.pdf]]
 
 # Structuring Machine Learning Projects
+## ML strategy
+- To improve a ML model we have too many ideas
+![[Pasted image 20230610140547.png]]
+	a poor choice of ideas may lead to waste of time and resources into a direction with no good result
+***Orthogonalization :*** What to tune to achieve that effect.
+![[Pasted image 20230610150800.png]]
+
+## Setting Up your Goal
+### Single Evaluation Metric 
+![[Pasted image 20230610152314.png]]
+- It speeds the the iteration cycle of 'Idea, code and Experiment'
+### Satisficing and Optimizing Metric
+![[Pasted image 20230610152726.png]]
+- trading of measures.
+- If we have N metrics that we care about, its better to choose *1 optimizing* (best value possible) and *N-1 satisficing* (means it should not surpass a threshold)
+### Distribution Train/dev/test sets to speed up
+- Find a way to make your Dev and Test sets come from the same distribution (All your data mixed together).
+- Choose a dev set and test set to reflect data you expect to get in the future and consider important todo well on.
+-  Rule of thumb [70%, 30%] - [60%, 20%, 20%], that was reasonable in early stages of deep learning era. In *modern deep learning era* (1,000,000 sample) [98%, 1%, 1%]
+- Set your test set to be big enough to give high confidence in the overall performance of your system.
+- In some usages, we don't need a test set, so people attend to use Train-Dev set split to iterate and improve the model **Not recommended !**
+### When to Change Dev/Test Sets and Metrics?
+![[Pasted image 20230610160911.png]]
+- This is a sign that you should change the eval. metric.
+- Define new evaluation/Error metric.
+![[Pasted image 20230610162621.png]]
+## Human-level performance
+### General
+* *Bayes optimal error :* is the best possible error, where no function cannot surpass it at all. Best theoretical function that cannot be surpassed.
+![[Pasted image 20230610175426.png]]
+- some times performances slows down when it surpasses human performance, because mostly it's not far from *Bayes optimal error*.
+- As long as ML model is worse than humans, you can:
+	-  Get labeled data from humans.
+	-  Gain insight from manual error analysis: Why did a person get this right?
+	-   Better analysis of bias/variance.
+
+### Avoidable Bias 
+![[Pasted image 20230610182959.png]]
+-  Study case
+![[Pasted image 20230610211520.png]]
+-> What is *human-level* error?
+We can conclude that *Bayes error* $\lt 0.5\%$ 
+
+### Surpassing Human-level Performance
+*I don't know what to write in here.*
+### Improving your Model Performance
+![[Pasted image 20230610231641.png]]
+![[Pasted image 20230610232312.png]]
+## Error Analysis
+### Case study:
+- We have a cat image classifier who achieves 90% accuracy, but it miss labeled dog images with cats.
+![[Pasted image 20230611211213.png]]
+*Evaluate if a single idea is worth working on.*
+![[Pasted image 20230611211301.png]]
+![[Pasted image 20230611211503.png]]
+### Cleaning Up Incorrectly Labeled Data
+- **DL algorithms are quite robust to random errors in the training set**
+- ![[Pasted image 20230611220938.png]]
+9.4% of error worth working on
+- ![[Pasted image 20230611221926.png]]
+### Build your First System Quickly, then Iterate
+![[Pasted image 20230611222709.png]]
+- Get Data + Label it
+- Split into Train/dev/test
+- Choose a metric (Target)
+- Build you 1st DL model
+- Use bias, variance and error analysis to know your next step 
+## Mismatched Training and Dev/Test Set
+### Training and Testing on Different Distributions
+![[Pasted image 20230611230641.png]]
+- *Option 01:* Merge the both datasets and shuffle them.
+	- $Advantage :$ The dev and test set will come from the same distribution 
+	- $desadvantage :$ The dev and test set will have right percentage or webpages images rather what u actually care about.
+- *Option 02:* Have all the webpages images + a little of mobile app, and dev/test set will be purely from mobile app.
+	- $Advantage :$ You are aiming your target properly, so you have a model that will focus on the mobile  app images. 
+	- $desadvantage :$ Train set will be from different distribution than dev and test set
+**Conclusion:** the *Option 02* is recommended because it will give the best result on the long term.
+![[Pasted image 20230612000517.png]]
+![[Pasted image 20230612000952.png]]
+![[Pasted image 20230612001048.png]]
+
+### Bias and Variance with Mismatched Data Distributions
+![[Pasted image 20230612002701.png]]
+![[Pasted image 20230612002803.png]]
+![[Pasted image 20230612003144.png]]
+![[Pasted image 20230612003317.png]]
+![[Pasted image 20230612003532.png]]
+![[Pasted image 20230612004040.png]]
+### Addressing Data Mismatch
+![[Pasted image 20230612012258.png]]
+**Creating more data**
+![[Pasted image 20230612012643.png]]
+- Let say we have 10,000 Hours of recorded audio and only 1 Hour of car noise.
+	- *Approach 01:* we can repeat the 1 hour * 10,000 time but their is a possibility for the model to overfit for the car noise.
+ It is possible to use 10,000 hour of unique car noise avoid the issue of overfitting
+![[Pasted image 20230612013414.png]]
+*Try to avoid getting data of images from a video game (Because they are limited) or AI generated images (Because they follow a pattern and the model may overfit)*
+## Learning from Multiple Tasks
+### Transfer Learning
+- Using a model ability to recognize (Knowledge) cats as example and transfer this ability or knowledge to help recognize X-RAY images
+- ![[Pasted image 20230612014300.png]]
+- ![[Pasted image 20230612015421.png]]
+Remove  the last output layer and the connection leading to it and replace it with a new output layer or multiple layers with randomly initialized weights and bias $w^{[l]}, b^{[l]}$ and re-train the model the new data $(x,y)$ .
+-> if small data : We can fix all weights and biases of old model and only train the added weight and bias.
+-> if enough data : we can re-train the full model.
+**$(x_{\_},y_{\_}):$ called pre-trained model.**
+**$(x,y):$ called fine-tuned model.**
+![[Pasted image 20230612015148.png]]
+**WHY?**
+because a lot of low level tasks like detecting edges, lines , shapes and … . That are learned from a huge dataset by a pre-trained model may do better and help the fine-tuned model to learn faster.
+**WHEN?**
+Transfer learning makes sense when you have a lot of data for the problem you're transferring from and usually relatively less data for the problem you're transferring to.
+![[Pasted image 20230612020639.png]]
+### Multi-task Learning
+
+
+
+
+## NOTES PDF
+### Week 1:
+![[C3_W1.pdf]]
+![[1 - Orthogonalization.pdf]]
+![[2 - Single_number_evaluation_metric-2.pdf]]
+![[3 - Satisficing_and_optimizing_metric.pdf]]
+![[4 - Training_development_and_test_distributions.pdf]]
+![[5 - Size_of_the_development_and_test_sets.pdf]]
+![[6 - When_to_change_develpment_test_sets_and_metrics 1.pdf]]
+![[7 - Why_human_level_performance.pdf]]
+![[8 - Avoidable_bias.pdf]]
+![[9 - Understanding_human_level_performance.pdf]]
+![[10 - Surpassing_human_level_performance.pdf]]
+![[11 - Improving_your_model_performance.pdf]]
+
+### Week 2:
