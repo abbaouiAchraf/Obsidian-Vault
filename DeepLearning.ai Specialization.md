@@ -1,4 +1,4 @@
-# Neural networks and Deep learning
+# 1. Neural networks and Deep learning
 ## Neural networks
 ![[Pasted image 20230422153000.png]]
 ![[Pasted image 20230422153309.png]]
@@ -162,7 +162,7 @@ It just simple calculus
 ![[C1_W4.pdf]]
 
 
-# Improving Deep Neural Networks
+# 2. Improving Deep Neural Networks
 ## Train/ Dev/ Test sets
 Data                                                                           [100%]
 | Training set                                                                [60%]
@@ -481,7 +481,7 @@ $$a^{[l]} = \frac{e^{Z^{[l]}}}{\sum^{4}_{i=1} t_i}\ | \ t = e^{Z^{[l]}}\ | \ a^{
 ### Week 3:
 ![[C2_W3.pdf]]
 
-# Structuring Machine Learning Projects
+# 3. Structuring Machine Learning Projects
 ## ML strategy
 - To improve a ML model we have too many ideas
 ![[Pasted image 20230610140547.png]]
@@ -596,6 +596,42 @@ because a lot of low level tasks like detecting edges, lines , shapes and … . 
 Transfer learning makes sense when you have a lot of data for the problem you're transferring from and usually relatively less data for the problem you're transferring to.
 ![[Pasted image 20230612020639.png]]
 ### Multi-task Learning
+#### Study case : *Simplified autonomous driving example*
+The car will have to detect : Pedestrians, cars, stop signs, traffic lights...
+![[Pasted image 20230612211025.png]]
+$X^{(i)}:$ Multi-labeled image.
+![[Pasted image 20230612211454.png]]
+>To train it we need to define :
+>$Loss :\hat y_{(4,1)}^{(i)}$ 
+>![[Pasted image 20230612211650.png]]
+>Unlike Softmax regression, One image can have multiple labels
+	 
+**Multi-task learning:** is when developing a model to identify multiple classes (Objects). Instead of developing 4 NN that will have similar earlier features you can develop one model.
+-> You can use multi-task leaning when having a data set with some features not really labeled "?" in all images.
+![[Pasted image 20230612214527.png]]
+**When does it make sense**
+- If you don't have a big NN, then Multi-task learning will hurt performance.
+![[Pasted image 20230612220149.png]]
+## What is End-to-end Deep Learning?
+### General:
+there have been some data processing systems, or learning systems that require multiple stages of processing. And what end-to-end deep learning does, is it can take all those multiple stages, and replace it usually with just a single neural network.
+![[Pasted image 20230612223204.png]]
+- One of the challenges is u may need a lot of data.
+![[Pasted image 20230612232105.png]]
+Instead of trying to learn all at once, it's better to learn things step by step when not having a really a lot of data.
+### Pros and cons:
+- **Pros**
+	- Let your data speak: you don't force a learning path to it
+	- Less hand-designing of components needed
+- **Cons**
+	- May need large amount of data
+	- Excludes potentially useful hand-designed components
+### Applying end-to-end deep learning
+![[Pasted image 20230613001317.png]]
+![[Pasted image 20230613001725.png]]
+![[Pasted image 20230613001824.png]]
+## EXAM
+- Adding this data to the training set will change the training set distribution. However, it is not a problem to have different training and dev distributions. In contrast, it would be very problematic to have different dev and test set distributions.
 
 
 
@@ -616,3 +652,109 @@ Transfer learning makes sense when you have a lot of data for the problem you're
 ![[11 - Improving_your_model_performance.pdf]]
 
 ### Week 2:
+![[C3_W2.pdf]]
+![[1 - Build_System_Quickly 1.pdf]]
+![[2 - Training_and_testing_on_different_distributions 1.pdf]]
+
+![[3 - Bias_and_variance_with_mismatched_data_distributions 1.pdf]]
+
+![[4 - Adressing_data_mismatch 1.pdf]]
+
+![[5 - Transfer_Learning 1.pdf]]
+
+![[6 - Multi_Task_Learning 1.pdf]]
+
+![[7 - What_is_end_to_end_deep_learning 1.pdf]]
+
+![[8 - Whether_to_use_end_to_end_deep_learning 1.pdf]]
+
+# 4. Convolutional Neural Networks
+## CNN
+### Computer vision
+![[Pasted image 20230613160838.png]]
+### Edge Detection Example
+#### Vertical edge detection
+![[Pasted image 20230613162840.png]]
+- To detect edges we filters to extract them (KERNEL) basing on the convolutional operation
+-  **Calculation :** vertical edge detection
+>![[Pasted image 20230613163315.png]]
+>![[Pasted image 20230613163335.png]]
+>![[Pasted image 20230613163519.png]]
+>![[Pasted image 20230613163637.png]]
+
+- Prove for it:
+![[Pasted image 20230613164131.png]]
+->
+![[Pasted image 20230613164501.png]]
+#### Horizontal edge detection
+![[Pasted image 20230613164553.png]]
+ >![[Pasted image 20230613164824.png]]
+
+**Sobel filter/Schorr filter** are kind of more robust
+![[Pasted image 20230613164956.png]]
+![[Pasted image 20230613165019.png]]
+**We can make back-prob learn the appropriate filter for extracting edges (maybe even on 45°, 73°, 70°...) in a image by treating weights as filters/kernels.**
+
+### Padding
+$(n,n) * (f,f) = (n-f+1,n-f+1)$
+- *Problems:* 
+	- Shrinking output
+	- Losing information's of the edge of the image
+- *Solution:*
+	- Add padding to the image
+	- ![[Pasted image 20230613202820.png]]
+	- Padding amount = P = 0
+	- $(n+2p,n+2p) * (f,f) = (n+2p-f+1,n+2p-f+1)$
+	![[Pasted image 20230613203223.png]]
+**U can use 1x1, 3x3, 5x5, 7x7 filters**
+### Strided convolution
+![[Pasted image 20230614005259.png]]
+![[Pasted image 20230614011030.png]]
+**Cross-correlation (Convolution in math textbooks)**
+![[Pasted image 20230614011331.png]]
+### Convolutions Over Volume
+![[Pasted image 20230614140648.png]]
+>We add up the result from each RGB channel 
+
+![[Pasted image 20230614141301.png]]
+![[Pasted image 20230614142106.png]]
+### One Layer of a Convolutional Network
+![[Pasted image 20230614142541.png]]
+![[Pasted image 20230614142644.png]]
+**Summary of notation**
+![[Pasted image 20230614145045.png]]
+### Simple CNN
+**TYPE OF LAYERS IN A CNN:**
+![[Pasted image 20230614155900.png]]
+### Pooling layers
+![[Pasted image 20230614160916.png]]
+>Taking the max from each area.
+>It has no parameter to learn from Gradian descent
+>![[Pasted image 20230614161301.png]]
+
+![[Pasted image 20230614161526.png]]
+>to collapse the image representation
+
+![[Pasted image 20230614162240.png]]
+### CNN Example
+#### LeNet-5
+![[Pasted image 20230614163747.png]]
+**Very common patterns: **![[Pasted image 20230614163933.png]]
+
+![[Pasted image 20230614162747.png]]
+### Why convolutions
+![[Pasted image 20230614175431.png]]
+![[Pasted image 20230614175754.png]]
+>![[Pasted image 20230614175808.png]]
+>One output is only related to a few inputs (9 pixels)
+
+![[Pasted image 20230614180927.png]]
+
+## EXAM (KERAS & TF)
+![[Pasted image 20230614203547.png]]
+
+
+
+## NOTES PDF
+### Week 1:
+![[C4_W1.pdf]]
