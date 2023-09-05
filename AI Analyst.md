@@ -29,7 +29,6 @@ Chno dakxi li detecta useful or positive mn dakxi li detecta
 
 
 # API_KEY : 
-**API_KEY** : Wh5zqUmWxT0dtg0bVcSB6pnWYrgzsWtAi_R_ebj-CEPe
 ![[Pasted image 20230315133939.png]]
 
 Test Sync
