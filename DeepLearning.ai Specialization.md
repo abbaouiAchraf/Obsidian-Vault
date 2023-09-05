@@ -5,6 +5,7 @@
 *Input* -> *nodes+* -> *output*
 *Nodes* r called hidden units.
 *Number of layers = hidden layers + output layer*
+
 ## Supervised Learning
 ![[Pasted image 20230422154245.png]]
 ![[Pasted image 20230422154543.png]]
@@ -202,6 +203,7 @@ D --> J[Obtain More Data]
 D --> K[Apply Regularization Techniques] 
 D --> L[Explore Different Network Architectures] 
 ```
+
 ![[Pasted image 20230603012804.png]]
 ## Regularization
 ### Logistic regression
@@ -752,9 +754,365 @@ $(n,n) * (f,f) = (n-f+1,n-f+1)$
 
 ## EXAM (KERAS & TF)
 ![[Pasted image 20230614203547.png]]
+## Case Studies
+### Outline:
+![[Pasted image 20230615020648.png]]
+## Classic Networks
+### LeNet - 5
+- It's trained on gray scale images ($n_c = 1$)
+- ![[Pasted image 20230615155435.png]]
+- $n_H,n_W$  drops, $n_c$ get higher
+- *conv -> pool -> conv -> pool -> FC -> FC -> Output*
+### AlexNet
+- It's trained on RGB image ($n_c = 3$)
+- ![[Pasted image 20230615160036.png]]
+- uses ReLU
+### VGG - 16
+- Same parameter is all layers ![[Pasted image 20230615160548.png]]
+- [CONV 64] x 2 : represent two convolutional layers with *64 filters*
+- ![[Pasted image 20230615160800.png]]
+- 16 layers with weights
+- *conv -> pool* : Used to reduce height and weights.
 
+## ResNets
+### Residual block:
+- Casual path
+![[Pasted image 20230615162808.png]]
+- ![[Pasted image 20230615162913.png]]
+### Residual Network
+![[Pasted image 20230615163236.png]]
+### Details
+*Having a so deep neural network may hurt the performance of the model on the training set*
+![[Pasted image 20230615181509.png]]
+- Its easy for the NN to learn *Identity function* and get $a^{[l]}$ in the output with the *"short-cut"*, so adding it does not hurt performance.
+- In deeper NN, it's hard to learn about *identity function* and it may also hurt performance of the model
+### ResNets on images
+![[Pasted image 20230615182608.png]]
+## 1x1 Convolution
+- Can be used to shrink numbers of channels
+- ![[Pasted image 20230615183703.png]]
+>![[Pasted image 20230615183716.png]]
+>![[Pasted image 20230615183724.png]]
 
+## Inception Network Motivation
+**Why you should do any step of the mentioned steps, while you can do them all, and let the network choose whatever it wants**
+![[Pasted image 20230615184030.png]]
+To make dimensions looks the same we need to add padding for MAX-Pooling
+-> Computational cost
+![[Pasted image 20230615184559.png]]
+>Solution somehow: Reduction of computational cost
+>![[Pasted image 20230615185001.png]]
 
+## Inception Network (GooLeNet)
+### Inception module/Network
+![[Pasted image 20230615185711.png]]
+![[Pasted image 20230615185730.png]]
+>![[Pasted image 20230615185853.png]]
+>Taking some hidden layers and try to make predictions from there
+
+## MobileNet
+### Motivation
+- Low computational cost at deployment
+- Useful for mobile and embedded vision applications
+- Key idea : Normal vs. depthwise-separable convolutions
+![[Pasted image 20230615211126.png]]
+>![[Pasted image 20230615212036.png]]
+>*DEPTHWISE*
+>![[Pasted image 20230615212120.png]]
+>Apply one of each filters to one of each layer
+>*POINTWISE*
+>![[Pasted image 20230615213514.png]]
+>its normal convolution
+
+![[Pasted image 20230615215259.png]]
+$$Cost = \frac{1}{n_c^{'}} + \frac{1}{f^{2}}$$
+### MobileNet Architecture
+- The concept is using *depthwise separable convolution* instead of *normal convolution*
+![[Pasted image 20230615220741.png]]
+![[Pasted image 20230615221138.png]]
+>![[Pasted image 20230615221351.png]]
+>it has two good advantages :
+>1- By using *expansion* it makes the model learn more richer function.
+>2- When deploying, not using much computational resources.
+
+## EfficientNet
+- **Rethinking Model Scaling for Convolutional Neural Networks**
+![[Pasted image 20230615225247.png]]
+- Best trade-off between $r,d$ and $w$ to scale up or down your neural network, to get the best possible performance within your computational budget?
+- ![[Pasted image 20230615225830.png]]
+## Practical Advice for Using ConvNets
+### Data Augmentation
+![[Pasted image 20230616010621.png]]
+![[Pasted image 20230616011208.png]]
+![[Pasted image 20230616011836.png]]
+- Applying distortion while loading images from Hard Disk
+-  ![[Pasted image 20230616012744.png]]
+### State of Computer Vision
+![[Pasted image 20230616014015.png]]
+- The way to get better performance in Object Detection field is to hand-engineering (Transfer learning ….), this is what pushed it to create complex architecture.
+## Exam
+![[Pasted image 20230617005812.png]]
+![[Pasted image 20230617012732.png]]
+>The (X) means the number of filters used, not sure
+
+![[Pasted image 20230617145753.png]]
+![[Pasted image 20230617160319.png]]
+![[Pasted image 20230617171808.png]]
+![[Pasted image 20230617180123.png]]
+## Detection Algorithms
+### Object Localization
+![[Pasted image 20230619000504.png]]
+#### Classification with localization
+![[Pasted image 20230619001108.png]]
+- We need to have two output layers
+	- One for classification Softmax with 4 output classes
+	- Second one for bounding box ($b_x, b_y, b_h, b_w$) 
+	- For convention we annotate the *top-left corner* with $(0,0)$ and the *button-right corner* with $(1,1)$.
+	- ![[Pasted image 20230619002027.png]]
+	-  ![[Pasted image 20230619010835.png]]
+	- **C/C:** We need to output $b_x, b_y, b_h, b_w$, class label $(1-4)$
+	- ![[Pasted image 20230619011620.png]]
+- Loss function:
+	- ![[Pasted image 20230619012348.png]]
+	- We used squared error to simplify the expression
+### Landmark Detection
+- ![[Pasted image 20230619014410.png]]
+- ![[Pasted image 20230619014447.png]]
+- ![[Pasted image 20230619015207.png]]
+
+### Object detection
+#### Sliding windows detection
+- Let say we wanna build a *Car detection algorithm*, we can start by creating a training set that contains closely cropped images and their labels
+- ![[Pasted image 20230619230810.png]]
+- Create a **ConvNet** that will take cropped image as input and outputs the label *y*.
+- Algorithm based on:
+	- Inputting a small square in the image algorithm and classify it and pass a second image and see in it output by the *ConvNet*, until sliding the full image.
+	- ![[Pasted image 20230619231252.png]]
+	- We repeat it again with a larger box/window
+	- ![[Pasted image 20230619231731.png]]
+	- The hope is if they is a car some where in the image and got caught with the box, the algorithm will output *1*
+- **The disadvantage is the huge computational cost.**
+#### Convolutional Implementation of Sliding Windows
+![[Pasted image 20230619234023.png]]
+>![[Pasted image 20230619234140.png]]
+
+- The implementation:
+<p>FC layer is not FC layer, but indication that this is where "FC layer has been turned into convolutional layers"</p>
+![[Pasted image 20230620000010.png]]
+- To run Sliding windows on 16x16x3 image, we will need to run the first 14x14x3 4 times with the same parameter.
+![[Pasted image 20230620000902.png]]
+->![[Pasted image 20230620002114.png]]
+**Each corner of the output gives you the desired output on each region**
+- **GENERALIZATION**
+- ![[Pasted image 20230620004705.png]]
+-  Make all predictions in the same time.
+#### Bounding Box Predictions
+- Issue with sliding window is that we cannot get accurate bounding boxes
+- ![[Pasted image 20230620005916.png]]
+- Solution is *YOLO algorithm*
+- We use a grid on the image for illustration we use *3 by 3 grid* 
+- ![[Pasted image 20230620010608.png]]
+- For each of the grid images we will hv 8 dimensional vector
+- ![[Pasted image 20230620010733.png]]
+- *TARGET OUTPUT:* **3x3x8**
+- You assign an object by looking where the center of the object detected belongs to.
+- ![[Pasted image 20230620123034.png]]
+- Using one ConvNet, it's so efficient in term of computation.
+- ![[Pasted image 20230620123424.png]]
+### How can u tell if algorithm works well: Intersection Over Union
+![[Pasted image 20230620124052.png]]![[Pasted image 20230620124109.png]]
+*Correct if IoU* $\geq$ *0.5*   
+### Non-max Suppression
+- One of the problems of Object Detection as you've learned about this so far, is that your algorithm may find multiple detections of the same objects. *Non-max suppression* is a way for you to make sure that your algorithm detects each object only once.
+- ![[Pasted image 20230621012036.png]]
+- ![[Pasted image 20230621012428.png]]
+- **Non-max Suppression** cleans up the detections and leave one with the highest probability
+	- The Non-max Suppression will look at all of the remaining rectangles and all the ones with a high overlap, with high IoU with this one that u just output will get suppressed.
+	- ![[Pasted image 20230621013040.png]]
+	- $P_c$ is the probability of it being an object.
+	- Discard all boxes with $P_c \leq 0.6$
+![[Pasted image 20230621014244.png]]
+### Anchor Boxes
+![[Pasted image 20230621232053.png]]
+- In this case it cannot output two classes *Car* and *Person*
+- Let have multiple *Anchor boxes*
+- ![[Pasted image 20230621232231.png]]
+- ![[Pasted image 20230621234128.png]]
+- ![[Pasted image 20230621234322.png]]
+- ![[Pasted image 20230621235003.png]]
+- Downsides is when having 3 objects and 2 anchor boxes, also if two objects with the same shape of anchor boxes.
+-> It makes the output have some units specified to detect fat objects and also some units to detect tinny small units
+### YOLO Algorithm
+- Creating Training set:
+- ![[Pasted image 20230622001029.png]]
+>![[Pasted image 20230622001749.png]]
+![[Pasted image 20230622003832.png]]
+>![[Pasted image 20230622003858.png]]
+
+### Region Proposals: R-CNN
+- Run a segmentation algorithm to detect shapes that could be objects, and run cross fires on them
+- ![[Pasted image 20230622010315.png]]
+- Downside : SLOW
+- Fast R-CNN: R-CNN + Sliding windows
+![[Pasted image 20230622010834.png]]
+### Sematic Segmentation with U-Net
+- Label every single pixel if it is part of the object that we wanna detect or not 
+![[Pasted image 20230622115604.png]]
+- Motivation for U-Net was for medical uses:![[Pasted image 20230622115805.png]]
+**How does it work**
+>*Pre-pixel class labels*
+>![[Pasted image 20230622120448.png]]
+>![[Pasted image 20230622120502.png]]
+
+![[Pasted image 20230622120732.png]]
+The key factor is the take every set of implementation and blow it up to a bigger set of implementation, using *Transpose Convolutions*
+### Transpose Convolution
+![[Pasted image 20230622121147.png]]
+>![[Pasted image 20230622121346.png]]
+>![[Pasted image 20230622121448.png]]
+>**When the values over laps we add them to each other**
+
+![[Pasted image 20230622124035.png]]
+### U-Net Architecture
+![[Pasted image 20230622124155.png]]
+>![[Pasted image 20230622133045.png]]
+>![[Pasted image 20230622133132.png]]
+>![[Pasted image 20230622134207.png]]
+>We take arg max of each class to classify the image
+
+## EXAM
+![[Pasted image 20230622151630.png]]
+![[Pasted image 20230622154749.png]]
+![[Pasted image 20230624000054.png]]
+## Face Recognition
+### Generalization
+![[Pasted image 20230624104954.png]]
+### One Shot Learning
+* Learn how to identify a person from a single image, but historically it's known that DL models does not learn well from one sample
+* => *Solution:* is to learn similarity function
+![[Pasted image 20230624105651.png]]
+### Siamese Network
+![[Pasted image 20230624110150.png]]
+- Based on running the same NN with the same weights on two images to encode them and compare the final encoded representation to see the gap between them and define the similarity or not. The NN is used to encode and input $x^{(i)}$ to $f(x^{(i)})$ .
+- ![[Pasted image 20230624110534.png]]
+## Triplet Lose Function
+### Study
+![[Pasted image 20230624115543.png]]
+![[Pasted image 20230624115925.png]]
+- We add $\alpha$ to avoid the DL model to learn to output 0 every time because its an obvious solution to the equation
+![[Pasted image 20230624120702.png]]
+### Loss function $J$
+![[Pasted image 20230624121009.png]]
+- In the training set, try to have multiple images of the same person
+- Choose triplet that is *Hard* to train on
+- ![[Pasted image 20230624123012.png]]
+- Using gradian descent to try to minimize the cost function
+## Face verification
+![[Pasted image 20230625115645.png]]
+![[Pasted image 20230624123239.png]]
+**Same weights for both NN**
+![[Pasted image 20230625115742.png]]
+We can pre-compute the database image to lower the computational cost.
+![[Pasted image 20230625115919.png]]
+## Neural Style Transfer (Image Generation)
+### Generalization
+![[Pasted image 20230625122805.png]]
+### How?
+![[Pasted image 20230625123440.png]]
+![[Pasted image 20230625124352.png]]
+> ![[Pasted image 20230625124409.png]]
+
+### Cost Function
+#### Generalization
+![[Pasted image 20230625124909.png]]
+![[Pasted image 20230625125647.png]]
+- We are updating the pixel value with **gradient descent**
+- ![[Pasted image 20230625125728.png]]
+#### Content Cost Function
+![[Pasted image 20230625130220.png]]
+
+#### Style Cost Function
+![[Pasted image 20230625131345.png]]
+![[Pasted image 20230625131830.png]]
+![[Pasted image 20230625132214.png]]
+- The result will tell us how similar the style image and the generated one
+***Style Matrix***
+![[Pasted image 20230625132728.png]]
+$G^{[l]}_{k,k^{'}}:$ Measure the correlation between of two different channels $k,k^{'}$ in the hidden layer $l$ 
+
+![[Pasted image 20230625133824.png]]
+![[Pasted image 20230625133052.png]]
+![[Pasted image 20230625134645.png]]
+## 1D and 3D Generalizations
+![[Pasted image 20230625143052.png]]
+![[Pasted image 20230625143157.png]]
+## EXAM
+![[Pasted image 20230626000258.png]]
+![[Pasted image 20230626092146.png]]
+![[Pasted image 20230626093116.png]]
 ## NOTES PDF
 ### Week 1:
 ![[C4_W1.pdf]]
+### Week 2:
+![[C4_W2.pdf]]
+### Week 3:
+![[C4_W3.pdf]]
+### Week 4:
+![[C4_W4.pdf]]
+# References
+
+### **Week 1:**
+- [The Sequential model](https://www.tensorflow.org/guide/keras/sequential_model) (TensorFlow Documentation)
+    
+- [The Functional API](https://www.tensorflow.org/guide/keras/functional) (TensorFlow Documentation)  
+
+### **Week 2:**
+- [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385) (He, Zhang, Ren & Sun, 2015)
+    
+- [deep-learning-models/resnet50.py/](https://github.com/fchollet/deep-learning-models/blob/master/resnet50.py) (GitHub: fchollet)
+    
+- [MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications](https://arxiv.org/abs/1704.04861) (Howard, Zhu, Chen, Kalenichenko, Wang, Weyand, Andreetto, & Adam, 2017)
+- [MobileNetV2: Inverted Residuals and Linear Bottlenecks](https://arxiv.org/abs/1801.04381) (Sandler, Howard, Zhu, Zhmoginov &Chen, 2018)
+- [EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks](https://arxiv.org/abs/1905.11946) (Tan & Le, 2019)
+
+### **Week 3:**
+
+- [You Only Look Once: Unified, Real-Time Object Detection](https://arxiv.org/abs/1506.02640) (Redmon, Divvala, Girshick & Farhadi, 2015)
+    
+- [YOLO9000: Better, Faster, Stronger](https://arxiv.org/abs/1612.08242) (Redmon & Farhadi, 2016)
+    
+- [YAD2K](https://github.com/allanzelener/YAD2K) (GitHub: allanzelener)
+    
+- [YOLO: Real-Time Object Detection](https://pjreddie.com/darknet/yolo/)
+    
+- [Fully Convolutional Architectures for Multi-Class Segmentation in Chest Radiographs](https://arxiv.org/abs/1701.08816) (Novikov, Lenis, Major, Hladůvka, Wimmer & Bühler, 2017)
+    
+- [Automatic Brain Tumor Detection and Segmentation Using U-Net Based Fully Convolutional Networks](https://arxiv.org/abs/1705.03820) (Dong, Yang, Liu, Mo & Guo, 2017)
+    
+- [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597) (Ronneberger, Fischer & Brox, 2015)
+    
+
+### **Week 4:**
+
+- [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/pdf/1503.03832.pdf) (Schroff, Kalenichenko & Philbin, 2015)
+    
+- [DeepFace: Closing the Gap to Human-Level Performance in Face Verification](https://research.fb.com/wp-content/uploads/2016/11/deepface-closing-the-gap-to-human-level-performance-in-face-verification.pdf) (Taigman, Yang, Ranzato & Wolf)
+    
+- [facenet](https://github.com/davidsandberg/facenet) (GitHub: davidsandberg)
+    
+- [How to Develop a Face Recognition System Using FaceNet in Keras](https://machinelearningmastery.com/how-to-develop-a-face-recognition-system-using-facenet-in-keras-and-an-svm-classifier/) (Jason Brownlee, 2019)
+    
+- [keras-facenet/notebook/tf_to_keras.ipynb](https://github.com/nyoki-mtl/keras-facenet/blob/master/notebook/tf_to_keras.ipynb) (GitHub: nyoki-mtl)
+    
+- [A Neural Algorithm of Artistic Style](https://arxiv.org/abs/1508.06576) (Gatys, Ecker & Bethge, 2015)
+    
+- [Convolutional neural networks for artistic style transfer](https://harishnarayanan.org/writing/artistic-style-transfer/)
+    
+- [TensorFlow Implementation of "A Neural Algorithm of Artistic Style"](http://www.chioka.in/tensorflow-implementation-neural-algorithm-of-artistic-style)
+    
+- [Very Deep Convolutional Networks For Large-Scale Image Recognition](https://arxiv.org/pdf/1409.1556.pdf) (Simonyan & Zisserman, 2015)
+    
+- [Pretrained models](https://www.vlfeat.org/matconvnet/pretrained/) (MatConvNet)
+# 5. Sequence Models
+
+

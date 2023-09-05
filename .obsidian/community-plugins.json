@@ -2,5 +2,6 @@
   "obsidian-version-history-diff",
   "table-editor-obsidian",
   "obsidian-file-cleaner",
-  "obsidian-git"
+  "obsidian-git",
+  "cm-editor-syntax-highlight-obsidian"
 ]
